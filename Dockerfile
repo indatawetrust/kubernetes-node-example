@@ -1,4 +1,8 @@
-FROM node:alpine
+FROM node:8
+
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+
+ENV PATH=$PATH:/home/node/.npm-global/bin
 
 RUN mkdir -p /usr/src/app
 
@@ -10,4 +14,6 @@ ADD package.json ./
 
 RUN npm install
 
-CMD ["npm", "start"]
+RUN npm install --global --unsafe-perm @cond/webrtc-test@latest
+
+CMD ["webrtc-test", "-v"]
